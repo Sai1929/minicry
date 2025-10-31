@@ -188,12 +188,14 @@ if uploaded:
             st.subheader("Preview of Uploaded Data")
             st.dataframe(df.head())
 
-            # Correlation Chart
+            #correlation charts
             with st.spinner("Generating correlation charts..."):
                 st.subheader("Correlation Outliers Chart")
                 selected_corr_vars = [dep_var] + indep_vars
                 if len(selected_corr_vars) >= 2:
-                    fig_corr = sns.pairplot(df[selected_corr_vars], diag_kind='kde', plot_kws={'alpha': 0.7, 's': 60})
+                    #  Use sampling for speed
+                    sample_df = df[selected_corr_vars].sample(min(len(df), 1000), random_state=42)
+                    fig_corr = sns.pairplot(sample_df, diag_kind='kde', plot_kws={'alpha': 0.6, 's': 30})
                     st.pyplot(fig_corr.fig)
                 else:
                     st.info("Select at least two numeric variables to generate the matrix plot.")
@@ -350,7 +352,7 @@ if uploaded:
                 )
 
             except Exception as e:
-                st.warning(f"⚠️ Could not compute ANOVA table: {e}")
+                st.warning(f" Could not compute ANOVA table: {e}")
 
             # Regression Equation
             st.subheader("Regression Equation")
@@ -890,7 +892,7 @@ if uploaded:
             ax.legend()
             st.pyplot(fig)
 
-            st.markdown(f"✅ **Certainty (LSL ≤ Y ≤ USL): {certainty:.2f}%**")
+            st.markdown(f" **Certainty (LSL ≤ Y ≤ USL): {certainty:.2f}%**")
 
             st.markdown("---")
 
@@ -973,4 +975,5 @@ st.markdown("<hr>", unsafe_allow_html=True)
 st.markdown(
     "<p style='text-align:center; color:gray;'>Process Performance Dashboard | Built by Web Synergies</p>",
     unsafe_allow_html=True
+
 )
