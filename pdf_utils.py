@@ -1,4 +1,5 @@
 import os
+import tempfile
 import datetime
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image as RLImage, Table, TableStyle
 from reportlab.lib.pagesizes import A4
@@ -6,8 +7,8 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from PyPDF2 import PdfMerger
 
-# === Create /reports directory ===
-REPORTS_DIR = os.path.join(os.getcwd(), "reports")
+#  Use /tmp/reports (works in Streamlit Cloud and Render)
+REPORTS_DIR = os.path.join(tempfile.gettempdir(), "reports")
 os.makedirs(REPORTS_DIR, exist_ok=True)
 
 styles = getSampleStyleSheet()
