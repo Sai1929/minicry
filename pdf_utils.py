@@ -76,7 +76,7 @@ def append_image_flowable(flowables, title, image_path, width=400, height=250):
     from reportlab.platypus import Image as RLImage
 
     if not os.path.exists(image_path):
-        flowables.append(Paragraph(f"⚠️ Missing image: {os.path.basename(image_path)}", styles["Normal"]))
+        flowables.append(Paragraph(f"Missing image: {os.path.basename(image_path)}", styles["Normal"]))
         return
 
     flowables.append(Paragraph(title, styles["Heading3"]))
