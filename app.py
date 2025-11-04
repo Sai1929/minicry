@@ -1072,22 +1072,22 @@ if uploaded:
     ]
     import os
 
-any_exists = False
-for fname in fixed_names:
-    if os.path.exists(fname):
-        any_exists = True
-        display_name = os.path.basename(fname)  #  only the filename
-        st.write(display_name)
-        with open(fname, "rb") as f:
-            st.download_button(
-                label=f" Download {display_name}",
-                data=f,
-                file_name=display_name,
-                mime="application/pdf"
-            )
-
-if not any_exists:
-    st.write("No section reports generated yet. Run a section to create its PDF.")
+    any_exists = False
+    for fname in fixed_names:
+        if os.path.exists(fname):
+            any_exists = True
+            display_name = os.path.basename(fname)  #  only the filename
+            st.write(display_name)
+            with open(fname, "rb") as f:
+                st.download_button(
+                    label=f" Download {display_name}",
+                    data=f,
+                    file_name=display_name,
+                    mime="application/pdf"
+                )
+    
+    if not any_exists:
+        st.write("No section reports generated yet. Run a section to create its PDF.")
 
 st.markdown("---")
 st.header(" Final Report Download")
@@ -1115,3 +1115,4 @@ st.markdown(
     "<p style='text-align:center; color:gray;'> Performance Dashboard | Built by Web Synergies</p>",
     unsafe_allow_html=True
 )
+
