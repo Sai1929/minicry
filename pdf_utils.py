@@ -72,23 +72,19 @@ def df_to_table_flowable(df, table_width=400, font_size=8):
 
 
 
-
 def append_image_flowable(flowables, title, image_path, width=400, height=250):
-    """Add an image to the PDF, saving it inside /reports."""
-    img_name = os.path.basename(image_path)
-    save_path = _safe_path(img_name)
+    from reportlab.platypus import Image as RLImage
 
-    # Move or copy image if not already in /reports
-    if os.path.exists(image_path) and image_path != save_path:
-        try:
-            os.replace(image_path, save_path)
-        except Exception:
-            pass
+    if not os.path.exists(image_path):
+        flowables.append(Paragraph(f"⚠️ Missing image: {os.path.basename(image_path)}", styles["Normal"]))
+        return
 
     flowables.append(Paragraph(title, styles["Heading3"]))
     flowables.append(Spacer(1, 6))
-    flowables.append(RLImage(save_path, width=width, height=height))
+    flowables.append(RLImage(image_path, width=width, height=height))
     flowables.append(Spacer(1, 12))
+
+
 
 
 def merge_section_pdfs(output_basename="Minitab_crystalball_Report"):
