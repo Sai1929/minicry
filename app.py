@@ -100,11 +100,13 @@ def anderson_darling_minitab(data):
     return adj_ad, p
 
 # image saving helper
-def save_fig_as_png(fig, name):
-    path = f"{name}.png"
-    fig.savefig(os.path.join("reports", "Regression_plot.png"))
-    plt.close(fig)
-    return path
+def save_fig_as_png(fig, filename):
+    from pdf_utils import REPORTS_DIR
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+    file_path = os.path.join(REPORTS_DIR, f"{filename}.png")
+    fig.savefig(file_path, bbox_inches="tight")
+    return file_path
+
 
 # --- Page Title ---
 st.title("Process Performance Model")
@@ -1117,3 +1119,4 @@ st.markdown(
     "<p style='text-align:center; color:gray;'> Performance Dashboard | Built by Web Synergies</p>",
     unsafe_allow_html=True
 )
+
