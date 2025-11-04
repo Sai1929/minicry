@@ -10,7 +10,7 @@ from scipy import stats
 from reportlab.platypus import Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from pdf_utils import styles
-
+from pdf_utils import REPORTS_DIR 
 import os
 
 # PDF utils (local)
@@ -1058,7 +1058,7 @@ if uploaded:
 
     # === After each section: list existing per-section reports and merge option ===
     st.markdown("---")
-    st.markdown("### Generated Section Reports (this folder)")
+    #st.markdown("### Generated Section Reports (this folder)")
     # show fixed list order (only those that exist)
     fixed_names = [
         "Upload_&_Normality_report.pdf",
@@ -1073,12 +1073,14 @@ if uploaded:
     import os
 
     any_exists = False
+    st.subheader("Generated Section Reports (this folder)")
     for fname in fixed_names:
-        if os.path.exists(fname):
+        file_path = os.path.join(REPORTS_DIR, os.path.basename(fname))  # ✅ check inside reports/
+        if os.path.exists(file_path):
             any_exists = True
-            display_name = os.path.basename(fname)  #  only the filename
+            display_name = os.path.basename(file_path)
             st.write(display_name)
-            with open(fname, "rb") as f:
+            with open(file_path, "rb") as f:
                 st.download_button(
                     label=f" Download {display_name}",
                     data=f,
@@ -1115,4 +1117,3 @@ st.markdown(
     "<p style='text-align:center; color:gray;'> Performance Dashboard | Built by Web Synergies</p>",
     unsafe_allow_html=True
 )
-
