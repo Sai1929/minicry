@@ -16,10 +16,13 @@ import os
 # PDF utils (local)
 from pdf_utils import (
     generate_section_pdf,
-    merge_section_pdfs,
     df_to_table_flowable,
-    append_image_flowable
+    append_image_flowable,
+    save_fig_as_png,
+    merge_section_pdfs,
+    REPORTS_DIR,
 )
+
 
 # --- Streamlit Page Configuration ---
 st.set_page_config(page_title="Process Performance Dashboard", layout="wide")
@@ -535,6 +538,7 @@ if uploaded:
             # Regression plot saved & appended
             reg_img = save_fig_as_png(fig_reg, "regression_plot")
             append_image_flowable(flowables, "Regression Plot", reg_img)
+
 
             # generate per-section PDF (overwrites)
             generate_section_pdf("Regression", flowables)
@@ -1117,3 +1121,4 @@ st.markdown(
     "<p style='text-align:center; color:gray;'> Performance Dashboard | Built by Web Synergies</p>",
     unsafe_allow_html=True
 )
+
