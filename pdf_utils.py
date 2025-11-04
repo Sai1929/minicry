@@ -124,14 +124,20 @@ def append_image_flowable(flowables, title, image_path, width=400, height=250):
 
 
 def save_fig_as_png(fig, name):
-    """Helper: saves a matplotlib figure safely in /tmp/reports and returns its path."""
+    """Helper: safely saves matplotlib figure in /tmp/reports and returns path."""
     try:
+        # Always save inside Render-safe temp directory
         img_path = os.path.join(REPORTS_DIR, f"{name}.png")
+
+        # Make sure directory exists
+        os.makedirs(REPORTS_DIR, exist_ok=True)
+
+        # Save plot
         fig.savefig(img_path, bbox_inches="tight")
-        print(f"Figure saved: {img_path}")
+        print(f"Figure saved at {img_path}")
         return img_path
     except Exception as e:
-        print(f"Failed to save figure {name}: {e}")
+        print(f" Failed to save figure {name}: {e}")
         return None
 
 
